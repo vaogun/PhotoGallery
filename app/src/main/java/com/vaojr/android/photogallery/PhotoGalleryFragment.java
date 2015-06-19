@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import java.io.IOException;
+
 public class PhotoGalleryFragment extends Fragment {
     GridView mGridView;
 
@@ -26,4 +28,6 @@ public class PhotoGalleryFragment extends Fragment {
         mGridView = (GridView)v.findViewById(R.id.gridView);
         return v;
     }
+
+
 }
