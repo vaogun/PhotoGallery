@@ -2,6 +2,7 @@ package com.vaojr.android.photogallery;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -26,6 +27,11 @@ public class PhotoGalleryActivity extends SingleFragmentActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             Log.i(TAG, "Received a new search query: " + query);
+
+            PreferenceManager.getDefaultSharedPreferences(this)
+                    .edit()
+                    .putString(FlickrFetchr.PREF_SEARCH_QUERY, query)
+                    .commit();
         }
 
         fragment.updateItems();
