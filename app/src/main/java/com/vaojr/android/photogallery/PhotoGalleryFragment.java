@@ -32,8 +32,8 @@ public class PhotoGalleryFragment extends Fragment {
 
         setRetainInstance(true);
         setHasOptionsMenu(true);
-        
-        new FetchItemsTask().execute();
+
+        updateItems();
 
         mThumbnailThread = new ThumbnailDownloader<ImageView>(new Handler());
         mThumbnailThread.setListener(new ThumbnailDownloader.Listener<ImageView>() {
@@ -101,6 +101,10 @@ public class PhotoGalleryFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         mThumbnailThread.clearQueue();
+    }
+
+    public void updateItems() {
+        new FetchItemsTask().execute();
     }
 
     private class FetchItemsTask extends AsyncTask<Void,Void,ArrayList<GalleryItem>> {
