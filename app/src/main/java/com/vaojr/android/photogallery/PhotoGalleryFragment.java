@@ -31,8 +31,8 @@ public class PhotoGalleryFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         setRetainInstance(true);
-        setHasOptionsMenu(true)
-        ;
+        setHasOptionsMenu(true);
+        
         new FetchItemsTask().execute();
 
         mThumbnailThread = new ThumbnailDownloader<ImageView>(new Handler());
