@@ -72,4 +72,12 @@ public class PollService extends IntentService {
             pi.cancel();
         }
     }
+
+    public static boolean isServiceAlarmOn(Context context) {
+        Intent i = new Intent(context, PollService.class);
+        PendingIntent pi = PendingIntent.getService(
+                context, 0, i, PendingIntent.FLAG_NO_CREATE);
+        return pi != null;
+    }
+
 }
