@@ -20,9 +20,10 @@ public class PollService extends IntentService {
     private static final String TAG = "PollService";
     private static final int POLL_INTERVAL = 1000 * 60 * 5; // 5 minutes
     public static final String PREF_IS_ALARM_ON = "isAlarmOn";
-
     public static final String ACTION_SHOW_NOTIFICATION =
             "com.vaojr.android.photogallery.SHOW_NOTIFICATION";
+    public static final String PERM_PRIVATE =
+            "com.vaojr.android.photogallery.PRIVATE";
 
     public PollService() {
         super(TAG);
@@ -74,7 +75,7 @@ public class PollService extends IntentService {
 
             notificationManager.notify(0, notification);
 
-            sendBroadcast(new Intent(ACTION_SHOW_NOTIFICATION));
+            sendBroadcast(new Intent(ACTION_SHOW_NOTIFICATION), PERM_PRIVATE);
         }
 
         prefs.edit()
