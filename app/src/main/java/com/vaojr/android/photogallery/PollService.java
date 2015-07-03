@@ -1,5 +1,6 @@
 package com.vaojr.android.photogallery;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class PollService extends IntentService {
     private static final String TAG = "PollService";
-    private static final int POLL_INTERVAL = 1000 * 60 * 5; // 5 minutes
+    private static final int POLL_INTERVAL = 1000 * 15; // 5 minutes
     public static final String PREF_IS_ALARM_ON = "isAlarmOn";
     public static final String ACTION_SHOW_NOTIFICATION =
             "com.vaojr.android.photogallery.SHOW_NOTIFICATION";
@@ -70,17 +71,21 @@ public class PollService extends IntentService {
                     .setAutoCancel(true)
                     .build();
 
-            NotificationManager notificationManager = (NotificationManager)
-                    getSystemService(NOTIFICATION_SERVICE);
-
-            notificationManager.notify(0, notification);
-
-            sendBroadcast(new Intent(ACTION_SHOW_NOTIFICATION), PERM_PRIVATE);
+            showBackgroundNotification(0, notification);
         }
 
         prefs.edit()
                 .putString(FlickrFetchr.PREF_LAST_RESULT_ID, resultId)
                 .commit();
+    }
+
+    void showBackgroundNotification(int requestCode, Notification notification) {
+        Intent i = new Intent(ACTION_SHOW_NOTIFICATION);
+        i.putExtra("REQUEST_CODE", requestCode);
+        i.putExtra("NOTIFICATION", notification);
+
+        sendOrderedBroadcast(i, PERM_PRIVATE, null, null,
+                Activity.RESULT_OK, null, null);
     }
 
     public static void setServiceAlarm(Context context, boolean isOn) {
